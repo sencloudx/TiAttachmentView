@@ -113,22 +113,22 @@
 
 -(void)openurl:(id)args
 {
-//    NSLog(@"args---------------:%@",args);
  
     ENSURE_SINGLE_ARG(args, NSString);
     
     NSString* path = (NSString*)args;
-
+    
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     
     NSFileManager* fileManager = [NSFileManager defaultManager];
     
     if ([fileManager fileExistsAtPath:path]) {
+        
+        NSLog(@"file exist");
+        
         if (self.fileInteractionController == nil) {
             self.fileInteractionController = [[UIDocumentInteractionController interactionControllerWithURL:fileURL] retain];
-            
             self.fileInteractionController.delegate = self;
-            [self.fileInteractionController presentPreviewAnimated:YES];
             
         } else {
             
@@ -136,15 +136,21 @@
             
         }
         
-        UIViewController* controller =  [self topViewController]; /*[UIApplication sharedApplication].keyWindow.rootViewController;*/
         
-//        if ([TiUtils isIOS7OrGreater]) {
-//            [self.fileInteractionController presentOptionsMenuFromRect:controller.view.frame inView:controller.view animated:YES];
-//        } else
-//        {
-//            self.fileInteractionController.delegate = self;
-//            [self.fileInteractionController presentPreviewAnimated:YES];
-//        }
+        [self.fileInteractionController presentPreviewAnimated:YES];
+        
+        
+        //        UIViewController* controller =  [self topViewController]; /*[UIApplication sharedApplication].keyWindow.rootViewController;*/
+        
+        //        if ([TiUtils isIOS7OrGreater]) {
+        //            [self.fileInteractionController presentOptionsMenuFromRect:controller.view.frame inView:controller.view animated:YES];
+        //        } else
+        //        {
+        //            self.fileInteractionController.delegate = self;
+        //            [self.fileInteractionController presentPreviewAnimated:YES];
+        //        }
+    } else {
+        NSLog(@"file not exist");
     }
 }
 
